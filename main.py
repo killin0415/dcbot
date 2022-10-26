@@ -10,7 +10,7 @@ from nextcord.webhook import sync
 intents = nextcord.Intents.all()
 client = commands.Bot(command_prefix='--', intents=intents)
 client.remove_command('help')
-TOKEN = ""
+TOKEN = "OTA1NDA1ODM2OTg4Mzk1NTQw.GN-beG.74xkeytc39RS_9yc3tYnMEhdaf6XnH3FCbzEOI"
 
 
 def check(ctx):

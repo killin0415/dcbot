@@ -15,7 +15,7 @@ with open('JSONHOME/data.json', 'r', encoding='utf-8') as f:
     f.close()
 
 
-class MyEmbedFieldPageSource(menus.ListPageSource):
+class MyEmbedFieldPageSource(menus.ListPageSource): # 固定數量的顯示資料
     def __init__(self, data):
         super().__init__(data, per_page=2)
 
@@ -30,7 +30,7 @@ class MyEmbedFieldPageSource(menus.ListPageSource):
         return embed
 
 
-class Dropdown(nextcord.ui.Select):
+class Dropdown(nextcord.ui.Select): # 將user所選的label傳給menu去做呈現
     def __init__(self, client, ctx):
 
         # Set the options that will be presented inside the dropdown
@@ -65,7 +65,7 @@ class Dropdown(nextcord.ui.Select):
         # await interaction.response.send_message(embed=embed, VIEW = self)
 
 
-class DropdownView(nextcord.ui.View):
+class DropdownView(nextcord.ui.View): # 控制DC UI 介面
     def __init__(self, client, ctx):
         super().__init__()
         self.client = client
@@ -82,7 +82,7 @@ class price(Cog_Extention):
         # start the task to run in the background
         self.my_background_task.start()
 
-    @tasks.loop(time=[datetime.time(hour=0)])
+    @tasks.loop(time=[datetime.time(hour=0)]) # 固定時間爬取資料
     async def my_background_task(self):
         scope = ['https://www.googleapis.com/auth/spreadsheets',
                  'https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive']
@@ -120,9 +120,14 @@ class price(Cog_Extention):
     async def before_my_task(self):
         await self.client.wait_until_ready()  # wait until the bot logs in
 
-    @commands.command()
-    async def colour(self, ctx):
-        """Sends a message with our dropdown containing colours"""
+    @commands.command() # 呼叫指令
+    async def price(self, ctx):
+        """
+        user 呼叫指令
+        將content物件傳給view去做使用
+        view啟動dropdown(主程式邏輯)開始運作
+        dropdown將user選擇的label對應到的清單傳給menu去做present
+        """
 
         # Create the view containing our dropdown
         view = DropdownView(self.client, ctx)

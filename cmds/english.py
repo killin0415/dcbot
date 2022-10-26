@@ -21,7 +21,7 @@ class English(Cog_Extention):
     else:
         await ctx.send("I'm sorry,potato didn't know this word")
 
-  @commands.command()
+  @commands.command() # 輸入資料包含英文及他的中文翻譯，若英文不存在在資料裡會將這筆資料輸入進去並回傳success，反之亦然
   async def add(self, ctx, en:str, ch:str):
     if en not in English_Dictionary.keys():
       English_Dictionary[en] = ch
@@ -33,8 +33,8 @@ class English(Cog_Extention):
       await ctx.send("there's already a word in the dictionary, please use --search to find the word.")
 
       
-  @commands.check(check)
-  @commands.command()
+  @commands.check(check) 
+  @commands.command() # 檢查要刪除的資料是否存在，若不存在則回傳fail，反之將資料刪除回傳success
   async def delete(self, ctx, en: str):
     try:
       del English_Dictionary[en]
